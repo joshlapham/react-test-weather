@@ -67,8 +67,11 @@
     
     UIViewController *vc = [[UIViewController alloc] init];
     vc.view = rootView;
+    vc.title = @"Weather Results";
+    vc.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React Native `FlatList` component view
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
     
-    [self presentViewController:vc
+    [self presentViewController:navController
                        animated:YES
                      completion:nil];
 }
