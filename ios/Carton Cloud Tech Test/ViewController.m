@@ -15,8 +15,30 @@
 
 @implementation ViewController
 
+- (void)fetchData {
+    // TODO: don't hardcode `apiUrl` value
+    // TODO: allow for URL params
+    // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
+    NSURL *apiUrl = [NSURL URLWithString:@"https://www.metaweather.com/api/location/1100661/"];
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    NSURLSessionDataTask *task = [session dataTaskWithURL:apiUrl
+                                        completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                            NSLog(@"%@", response);
+                                            NSLog(@"%@", data);
+                                        }];
+    
+    [task resume];
+}
+
 - (IBAction)highScoreButtonPressed:(id)sender {
     NSLog(@"High Score Button Pressed");
+    
+    // Testing
+    [self fetchData];
+    
     NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
     
     RCTRootView *rootView =
