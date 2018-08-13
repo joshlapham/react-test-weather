@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import <React/RCTRootView.h>
 
+const float kWholeDay = 86400.0;
+const NSString *kWIDBrisbane = @"1100661";
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *fetchWeatherDataButton;
@@ -38,8 +41,7 @@
 
 - (NSDate *)yesterday {
     NSDate *today = [NSDate date];
-    // TODO: don't hardcode interval value
-    return [today dateByAddingTimeInterval:-86400.0];
+    return [today dateByAddingTimeInterval:-kWholeDay];
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
@@ -54,10 +56,9 @@
 }
 
 - (void)fetchData:(void (^)(NSDictionary *))completionHandler {
-    // TODO: don't hardcode `apiUrl` value
     // TODO: allow for URL params
     // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
-    NSURL *apiUrl = [NSURL URLWithString:@"https://www.metaweather.com/api/location/1100661/"];
+    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/", kWIDBrisbane]];
     
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
