@@ -18,6 +18,10 @@
 @implementation ViewController
 
 - (IBAction)fetchWeatherDataButtonPressed:(id)sender {
+    // Testing
+    NSString *dateString = [self stringFromDate:[self yesterday]];
+    NSLog(@"Date string: %@", dateString);
+    
     self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
@@ -30,6 +34,23 @@
             [self presentReactView:jsonData];
         });
     }];
+}
+
+- (NSDate *)yesterday {
+    NSDate *today = [NSDate date];
+    // TODO: don't hardcode interval value
+    return [today dateByAddingTimeInterval:-86400.0];
+}
+
+- (NSString *)stringFromDate:(NSDate *)date {
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear
+                                                                   fromDate:date];
+    
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    
+    return [NSString stringWithFormat:@"%ld/%ld/%ld", (long)year, (long)month, (long)day];
 }
 
 - (void)fetchData:(void (^)(NSDictionary *))completionHandler {
