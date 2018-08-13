@@ -26,13 +26,13 @@
     
     NSURLSessionDataTask *task = [session dataTaskWithURL:apiUrl
                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                            // TODO: implement error handling
                                             NSLog(@"%@", response);
                                             
                                             NSError *jsonError = nil;
                                             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                                                  options:0
                                                                                                    error:&jsonError];
-                                            //                                            NSLog(@"%@", json);
                                             
                                             completionHandler((NSDictionary *) json);
                                         }];
@@ -57,8 +57,6 @@
 }
 
 - (IBAction)highScoreButtonPressed:(id)sender {
-    NSLog(@"High Score Button Pressed");
-    
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     [self fetchData:^(NSDictionary *jsonData) {
