@@ -44,7 +44,7 @@
     NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
     
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                        moduleName:@"RNHighScores"
+                                                        moduleName:@"RNWeatherResultsList"
                                                  initialProperties:jsonData
                                                      launchOptions:nil];
     
