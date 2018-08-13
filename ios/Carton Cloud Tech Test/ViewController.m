@@ -11,17 +11,21 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIButton *fetchWeatherDataButton;
+
 @end
 
 @implementation ViewController
 
 - (IBAction)fetchWeatherDataButtonPressed:(id)sender {
+    self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     [self fetchData:^(NSDictionary *jsonData) {
         NSLog(@"JSON data: %@", jsonData);
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.fetchWeatherDataButton.enabled = YES;
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [self presentReactView:jsonData];
         });
