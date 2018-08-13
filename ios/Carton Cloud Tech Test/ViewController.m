@@ -29,9 +29,9 @@
                                             NSLog(@"%@", response);
                                             
                                             NSError *jsonError = nil;
-                                            id json = [NSJSONSerialization JSONObjectWithData:data
-                                                                                      options:0
-                                                                                        error:&jsonError];
+                                            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                 options:0
+                                                                                                   error:&jsonError];
                                             NSLog(@"%@", json);
                                         }];
     
