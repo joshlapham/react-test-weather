@@ -12,7 +12,10 @@ class RNWeatherResultsList extends React.Component {
             <Text style={styles.item}>
               Temperature: {item.the_temp}{'\n'}
               Condition: {item.weather_state_name}{'\n'}
-              Time: {item.created}
+              Time: {item.created}{'\n'}
+              Min: {item.min_temp}{'\n'}
+              Max: {item.max_temp}{'\n'}
+              Date: {item.applicable_date}
             </Text>
           }
         />
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18,
-    height: 88,
+    height: 176,
   },
 });
 
