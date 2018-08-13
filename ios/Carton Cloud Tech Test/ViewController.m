@@ -15,7 +15,7 @@
 
 @implementation ViewController
 
-- (void)fetchData {
+- (void)fetchData:(void (^)(NSDictionary *))completionHandler {
     // TODO: don't hardcode `apiUrl` value
     // TODO: allow for URL params
     // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
@@ -32,40 +32,43 @@
                                             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
                                                                                                  options:0
                                                                                                    error:&jsonError];
-                                            NSLog(@"%@", json);
+                                            //                                            NSLog(@"%@", json);
+                                            
+                                            completionHandler((NSDictionary *) json);
                                         }];
     
     [task resume];
 }
 
+- (void)presentReactView:(NSDictionary *)jsonData {
+    NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
+    
+    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                        moduleName:@"RNHighScores"
+                                                 initialProperties:jsonData
+                                                     launchOptions:nil];
+    
+    UIViewController *vc = [[UIViewController alloc] init];
+    vc.view = rootView;
+    
+    [self presentViewController:vc
+                       animated:YES
+                     completion:nil];
+}
+
 - (IBAction)highScoreButtonPressed:(id)sender {
     NSLog(@"High Score Button Pressed");
     
-    // Testing
-    [self fetchData];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
-    
-    RCTRootView *rootView =
-    [[RCTRootView alloc] initWithBundleURL: jsCodeLocation
-                                moduleName: @"RNHighScores"
-                         initialProperties:
-     @{
-       @"scores" : @[
-               @{
-                   @"name" : @"Alex",
-                   @"value": @"42"
-                   },
-               @{
-                   @"name" : @"Joel",
-                   @"value": @"10"
-                   }
-               ]
-       }
-                             launchOptions: nil];
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.view = rootView;
-    [self presentViewController:vc animated:YES completion:nil];
+    [self fetchData:^(NSDictionary *jsonData) {
+        NSLog(@"JSON data: %@", jsonData);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [self presentReactView:jsonData];
+        });
+    }];
 }
 
 @end
