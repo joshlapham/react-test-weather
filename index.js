@@ -1,11 +1,24 @@
 import React from 'react';
-import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {AppRegistry, FlatList, StyleSheet, Text, View} from 'react-native';
+
+class RNWeatherResultsList extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={this.props['consolidated_weather']}
+          renderItem={({item}) => <Text style={styles.item}>{item.max_temp}</Text>}
+        />
+      </View>
+    );
+  }
+}
 
 class RNHighScores extends React.Component {
   render() {
-    var contents = this.props['scores'].map((score) => (
-      <Text key={score.name}>
-        {score.name}:{score.value}
+    var contents = this.props['consolidated_weather'].map((data) => (
+      <Text key={data.max_temp}>
+        {data.max_temp}:{data.value}
         {'\n'}
       </Text>
     ));
@@ -35,7 +48,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
 });
 
 // Module name
-AppRegistry.registerComponent('RNHighScores', () => RNHighScores);
+AppRegistry.registerComponent('RNWeatherResultsList', () => RNWeatherResultsList);
