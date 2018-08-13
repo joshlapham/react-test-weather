@@ -15,6 +15,19 @@
 
 @implementation ViewController
 
+- (IBAction)fetchWeatherDataButtonPressed:(id)sender {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    [self fetchData:^(NSDictionary *jsonData) {
+        NSLog(@"JSON data: %@", jsonData);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [self presentReactView:jsonData];
+        });
+    }];
+}
+
 - (void)fetchData:(void (^)(NSDictionary *))completionHandler {
     // TODO: don't hardcode `apiUrl` value
     // TODO: allow for URL params
@@ -54,19 +67,6 @@
     [self presentViewController:vc
                        animated:YES
                      completion:nil];
-}
-
-- (IBAction)highScoreButtonPressed:(id)sender {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    [self fetchData:^(NSDictionary *jsonData) {
-        NSLog(@"JSON data: %@", jsonData);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [self presentReactView:jsonData];
-        });
-    }];
 }
 
 @end
