@@ -27,7 +27,12 @@
     NSURLSessionDataTask *task = [session dataTaskWithURL:apiUrl
                                         completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                                             NSLog(@"%@", response);
-                                            NSLog(@"%@", data);
+                                            
+                                            NSError *jsonError = nil;
+                                            id json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                      options:0
+                                                                                        error:&jsonError];
+                                            NSLog(@"%@", json);
                                         }];
     
     [task resume];
