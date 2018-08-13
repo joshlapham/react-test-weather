@@ -28,7 +28,12 @@ const NSString *kWIDBrisbane = @"1100661";
     self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    [self fetchData:^(NSDictionary *jsonData) {
+    // TODO: allow for URL params
+    // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
+    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/", kWIDBrisbane]];
+    
+    [self fetchData:apiUrl
+  completionHandler:^(NSDictionary *jsonData) {
         NSLog(@"JSON data: %@", jsonData);
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -55,11 +60,7 @@ const NSString *kWIDBrisbane = @"1100661";
     return [NSString stringWithFormat:@"%ld/%ld/%ld", (long)year, (long)month, (long)day];
 }
 
-- (void)fetchData:(void (^)(NSDictionary *))completionHandler {
-    // TODO: allow for URL params
-    // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
-    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/", kWIDBrisbane]];
-    
+- (void)fetchData:(NSURL *)apiUrl completionHandler:(void (^)(NSDictionary *))completionHandler {
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
