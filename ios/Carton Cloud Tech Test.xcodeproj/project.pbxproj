@@ -14,6 +14,7 @@
 		684F4C312121248B0010A0C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 684F4C302121248B0010A0C9 /* Assets.xcassets */; };
 		684F4C342121248B0010A0C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 684F4C322121248B0010A0C9 /* LaunchScreen.storyboard */; };
 		684F4C372121248B0010A0C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 684F4C362121248B0010A0C9 /* main.m */; };
+		68C48EDC2122750D0018C6AC /* NSDate+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		684F4C332121248B0010A0C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		684F4C352121248B0010A0C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		684F4C362121248B0010A0C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		68C48EDA2122750D0018C6AC /* NSDate+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helpers.h"; sourceTree = "<group>"; };
+		68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helpers.m"; sourceTree = "<group>"; };
 		8A0691BF6FD485CA4287C486 /* Pods-Carton Cloud Tech Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carton Cloud Tech Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carton Cloud Tech Test/Pods-Carton Cloud Tech Test.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,6 +70,7 @@
 			children = (
 				684F4C272121248A0010A0C9 /* AppDelegate.h */,
 				684F4C282121248A0010A0C9 /* AppDelegate.m */,
+				68C48EDD212275DA0018C6AC /* Categories */,
 				68C48ED72122733C0018C6AC /* View Controllers */,
 				68C48ED8212273540018C6AC /* Storyboards */,
 				684F4C302121248B0010A0C9 /* Assets.xcassets */,
@@ -92,6 +96,15 @@
 				684F4C2D2121248A0010A0C9 /* Main.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		68C48EDD212275DA0018C6AC /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				68C48EDA2122750D0018C6AC /* NSDate+Helpers.h */,
+				68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		8B2ED6088336F81213F263E8 /* Pods */ = {
@@ -204,6 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				684F4C2C2121248A0010A0C9 /* ViewController.m in Sources */,
+				68C48EDC2122750D0018C6AC /* NSDate+Helpers.m in Sources */,
 				684F4C372121248B0010A0C9 /* main.m in Sources */,
 				684F4C292121248A0010A0C9 /* AppDelegate.m in Sources */,
 			);

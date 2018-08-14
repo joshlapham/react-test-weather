@@ -8,9 +8,9 @@
 
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "NSDate+Helpers.h"
 #import <React/RCTRootView.h>
 
-const float kWholeDay = 86400.0;
 const NSString *kWIDBrisbane = @"1100661";
 
 @interface ViewController ()
@@ -25,7 +25,7 @@ const NSString *kWIDBrisbane = @"1100661";
     self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    NSString *dateString = [self stringFromDate:[self yesterday]];
+    NSString *dateString = [self stringFromDate:[NSDate yesterday]];
     
     NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/", kWIDBrisbane, dateString]];
     
@@ -39,11 +39,6 @@ const NSString *kWIDBrisbane = @"1100661";
           [self presentReactView:jsonData];
       });
   }];
-}
-
-- (NSDate *)yesterday {
-    NSDate *today = [NSDate date];
-    return [today dateByAddingTimeInterval:-kWholeDay];
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
