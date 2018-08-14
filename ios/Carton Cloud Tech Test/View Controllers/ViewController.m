@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "NSDate+Helpers.h"
+#import "UIAlertController+Helpers.h"
 #import <React/RCTRootView.h>
 
 const NSString *kWIDBrisbane = @"1100661";
@@ -23,21 +24,6 @@ const NSString *kErrorDomain = @"JPLError";
 @end
 
 @implementation ViewController
-
-- (UIAlertController *)errorAlertController:(NSString *)title
-                                    message:(NSString *)message {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                             message:message
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Okay", nil)
-                                                         style:UIAlertActionStyleDefault
-                                                       handler:nil];
-    
-    [alertController addAction:okayAction];
-    
-    return alertController;
-}
 
 - (void)toggleUIState:(BOOL)networkingActive {
     self.fetchWeatherDataButton.enabled = !networkingActive;
@@ -64,8 +50,8 @@ const NSString *kErrorDomain = @"JPLError";
           dispatch_async(dispatch_get_main_queue(), ^{
               [self toggleUIState:NO];
               
-              UIAlertController *errorAlertController = [self errorAlertController:NSLocalizedString(@"Error", nil)
-                                                                           message:[error localizedDescription]];
+              UIAlertController *errorAlertController = [UIAlertController errorAlertController:NSLocalizedString(@"Error", nil)
+                                                                                        message:[error localizedDescription]];
               
               [self presentViewController:errorAlertController
                                  animated:YES

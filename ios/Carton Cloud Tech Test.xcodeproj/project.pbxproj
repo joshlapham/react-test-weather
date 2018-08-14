@@ -15,6 +15,7 @@
 		684F4C342121248B0010A0C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 684F4C322121248B0010A0C9 /* LaunchScreen.storyboard */; };
 		684F4C372121248B0010A0C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 684F4C362121248B0010A0C9 /* main.m */; };
 		68C48EDC2122750D0018C6AC /* NSDate+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */; };
+		68C48EE3212288090018C6AC /* UIAlertController+Helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C48EE2212288090018C6AC /* UIAlertController+Helpers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		684F4C362121248B0010A0C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		68C48EDA2122750D0018C6AC /* NSDate+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Helpers.h"; sourceTree = "<group>"; };
 		68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Helpers.m"; sourceTree = "<group>"; };
+		68C48EE1212288090018C6AC /* UIAlertController+Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Helpers.h"; sourceTree = "<group>"; };
+		68C48EE2212288090018C6AC /* UIAlertController+Helpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Helpers.m"; sourceTree = "<group>"; };
 		8A0691BF6FD485CA4287C486 /* Pods-Carton Cloud Tech Test.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Carton Cloud Tech Test.release.xcconfig"; path = "Pods/Target Support Files/Pods-Carton Cloud Tech Test/Pods-Carton Cloud Tech Test.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +106,8 @@
 			children = (
 				68C48EDA2122750D0018C6AC /* NSDate+Helpers.h */,
 				68C48EDB2122750D0018C6AC /* NSDate+Helpers.m */,
+				68C48EE1212288090018C6AC /* UIAlertController+Helpers.h */,
+				68C48EE2212288090018C6AC /* UIAlertController+Helpers.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				684F4C2C2121248A0010A0C9 /* ViewController.m in Sources */,
 				68C48EDC2122750D0018C6AC /* NSDate+Helpers.m in Sources */,
 				684F4C372121248B0010A0C9 /* main.m in Sources */,
+				68C48EE3212288090018C6AC /* UIAlertController+Helpers.m in Sources */,
 				684F4C292121248A0010A0C9 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
