@@ -27,7 +27,6 @@ class RNWeatherResultsList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 22,
   },
   item: {
     padding: 10,
