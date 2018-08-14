@@ -13,6 +13,9 @@
 
 const NSString *kWIDBrisbane = @"1100661";
 
+// TODO: this should be external for all files
+const NSString *kErrorDomain = @"JPLError";
+
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *fetchWeatherDataButton;
@@ -21,42 +24,106 @@ const NSString *kWIDBrisbane = @"1100661";
 
 @implementation ViewController
 
+- (UIAlertController *)errorAlertController:(NSString *)title
+                                    message:(NSString *)message {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okayAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Okay", nil)
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:nil];
+    
+    [alertController addAction:okayAction];
+    
+    return alertController;
+}
+
+- (void)toggleUIState:(BOOL)networkingActive {
+    self.fetchWeatherDataButton.enabled = !networkingActive;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:networkingActive];
+}
+
 - (IBAction)fetchWeatherDataButtonPressed:(id)sender {
-    self.fetchWeatherDataButton.enabled = NO;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self toggleUIState:YES];
     
     NSString *dateString = [[NSDate yesterday] stringFromDate];
     
-    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/", kWIDBrisbane, dateString]];
+    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/",
+                                          kWIDBrisbane,
+                                          dateString]];
     
     NSLog(@"URL: %@", apiUrl);
     
     [self fetchData:apiUrl
-  completionHandler:^(NSDictionary *jsonData) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-          self.fetchWeatherDataButton.enabled = YES;
-          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-          [self presentReactView:jsonData];
-      });
+  completionHandler:^(NSDictionary * _Nullable jsonData,
+                      NSError * _Nullable error) {
+      NSLog(@"Error: %@", error);
+      
+      if (error != nil && jsonData == nil) {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [self toggleUIState:NO];
+              
+              UIAlertController *errorAlertController = [self errorAlertController:NSLocalizedString(@"Error", nil)
+                                                                           message:[error localizedDescription]];
+              
+              [self presentViewController:errorAlertController
+                                 animated:YES
+                               completion:nil];
+          });
+          
+      } else {
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [self toggleUIState:NO];
+              [self presentReactView:jsonData];
+          });
+      }
   }];
 }
 
 - (void)fetchData:(NSURL *)apiUrl
-completionHandler:(void (^)(NSDictionary *))completionHandler {
+completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullable error))completionHandler {
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
     NSURLSessionDataTask *task = [session dataTaskWithURL:apiUrl
-                                        completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                            // TODO: implement error handling
+                                        completionHandler:^(NSData * _Nullable data,
+                                                            NSURLResponse * _Nullable response,
+                                                            NSError * _Nullable error) {
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
                                             NSLog(@"%@", response);
+                                            NSLog(@"Status code: %ld", (long)httpResponse.statusCode);
                                             
-                                            NSError *jsonError = nil;
-                                            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
-                                                                                                 options:0
-                                                                                                   error:&jsonError];
-                                            
-                                            completionHandler((NSDictionary *) json);
+                                            if (error != nil) {
+                                                completionHandler(nil, error);
+                                                
+                                            } else if (httpResponse.statusCode != 200) {
+                                                NSDictionary *userInfo = @{
+                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Operation was unsuccessful.", nil),
+                                                                           NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The operation timed out.", nil),
+                                                                           NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Have you tried turning it off and on again?", nil)
+                                                                           };
+                                                
+                                                NSError *error = [NSError errorWithDomain:kErrorDomain
+                                                                                     code:-57
+                                                                                 userInfo:userInfo];
+                                                
+                                                completionHandler(nil, error);
+                                                
+                                            } else {
+                                                // Parse JSON data
+                                                NSError *jsonError = nil;
+                                                NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                     options:0
+                                                                                                       error:&jsonError];
+                                                
+                                                if (jsonError != nil) {
+                                                    completionHandler(nil, jsonError);
+                                                    
+                                                } else {
+                                                    completionHandler(json, nil);
+                                                }
+                                            }
                                         }];
     
     [task resume];
