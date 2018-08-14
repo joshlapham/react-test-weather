@@ -1,21 +1,21 @@
 import React from 'react';
-import {AppRegistry, FlatList, StyleSheet, Text, View} from 'react-native';
+import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
 
 class RNWeatherResultsList extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={ styles.container }>
         <FlatList
-          data={this.props.data}
+          data={ this.props.data }
           keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) =>
-            <Text style={styles.item}>
-              Temperature: {item.the_temp}{'\n'}
-              Condition: {item.weather_state_name}{'\n'}
-              Time: {item.created}{'\n'}
-              Min: {item.min_temp}{'\n'}
-              Max: {item.max_temp}{'\n'}
-              Date: {item.applicable_date}
+            <Text style={ styles.item }>
+              Temperature: { item.the_temp }{'\n'}
+              Condition: { item.weather_state_name }{'\n'}
+              Time: { item.created }{'\n'}
+              Min: { item.min_temp }{'\n'}
+              Max: { item.max_temp }{'\n'}
+              Date: { item.applicable_date }
             </Text>
           }
         />
