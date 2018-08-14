@@ -87,15 +87,26 @@ completionHandler:(void (^)(NSDictionary *))completionHandler {
                                                      moduleName:@"RNWeatherResultsList"
                                               initialProperties:jsonModified];
     
-    UIViewController *vc = [[UIViewController alloc] init];
-    vc.view = rootView;
-    vc.title = @"Weather Results";
-    vc.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React Native `FlatList` component view
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+    UIViewController *containerViewController = [[UIViewController alloc] init];
+    containerViewController.view = rootView;
+    containerViewController.title = @"Weather Results";
+    containerViewController.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React Native `FlatList` component view
+    
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                 target:self
+                                                                                 action:@selector(closeButtonTapped:)];
+    containerViewController.navigationItem.rightBarButtonItem = closeButton;
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:containerViewController];
     
     [self presentViewController:navController
                        animated:YES
                      completion:nil];
+}
+
+- (IBAction)closeButtonTapped:(id)sender {
+    [self dismissViewControllerAnimated:YES
+                             completion:nil];
 }
 
 @end
