@@ -13,7 +13,7 @@
 #import "NSError+Helpers.h"
 #import <React/RCTRootView.h>
 
-NSString * const kWIDBrisbane = @"1100661"; // Location ID for Brisbane
+NSString * const kWOEIDBrisbane = @"1100661"; // WOE Location ID for Brisbane
 
 @interface ViewController ()
 
@@ -38,7 +38,7 @@ NSString * const kWIDBrisbane = @"1100661"; // Location ID for Brisbane
     NSString *dateString = [[NSDate yesterday] stringFromDate];
     
     NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/",
-                                          kWIDBrisbane,
+                                          kWOEIDBrisbane,
                                           dateString]];
     
     [self fetchData:apiUrl
