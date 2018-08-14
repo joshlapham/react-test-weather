@@ -17,6 +17,8 @@ NSString * const kWIDBrisbane = @"1100661"; // Location ID for Brisbane
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UIStackView *controls;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *fetchWeatherDataButton;
 
 @end
@@ -25,6 +27,8 @@ NSString * const kWIDBrisbane = @"1100661"; // Location ID for Brisbane
 
 - (void)toggleUIState:(BOOL)networkingActive {
     self.fetchWeatherDataButton.enabled = !networkingActive;
+    self.controls.hidden = networkingActive;
+    self.loadingIndicator.hidden = !networkingActive;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:networkingActive];
 }
 

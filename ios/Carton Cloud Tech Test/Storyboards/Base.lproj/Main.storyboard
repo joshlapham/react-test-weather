@@ -42,16 +42,24 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="elI-2E-GJ4">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="elI-2E-GJ4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="479-NM-7BI"/>
                             <constraint firstItem="rE9-IJ-ApY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="A2f-0c-BgP"/>
+                            <constraint firstItem="elI-2E-GJ4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fzN-0V-kBU"/>
                             <constraint firstItem="rE9-IJ-ApY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sNh-5j-K8K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="controls" destination="rE9-IJ-ApY" id="MUr-Fi-G9c"/>
                         <outlet property="fetchWeatherDataButton" destination="SIc-US-oaz" id="Sf6-vo-ecS"/>
+                        <outlet property="loadingIndicator" destination="elI-2E-GJ4" id="72Z-Va-8VI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
