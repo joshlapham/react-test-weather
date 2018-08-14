@@ -94,6 +94,7 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullab
                                             NSLog(@"%@", response);
                                             NSLog(@"Status code: %ld", (long)httpResponse.statusCode);
                                             
+                                            // Handle errors
                                             if (error != nil) {
                                                 completionHandler(nil, error);
                                                 
@@ -140,7 +141,7 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullab
     
     UIViewController *containerViewController = [[UIViewController alloc] init];
     containerViewController.view = rootView;
-    containerViewController.title = @"Weather Results";
+    containerViewController.title = NSLocalizedString(@"Weather Results", nil);
     containerViewController.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React Native `FlatList` component view
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
