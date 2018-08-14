@@ -6,7 +6,7 @@ class RNWeatherResultsList extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.props['consolidated_weather']}
+          data={this.props.data}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({item}) =>
             <Text style={styles.item}>
