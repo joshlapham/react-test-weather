@@ -117,8 +117,13 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData,
     
     UIViewController *containerViewController = [[UIViewController alloc] init];
     containerViewController.view = rootView;
-    containerViewController.title = NSLocalizedString(@"Weather Results", nil);
     containerViewController.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React component view
+    
+    containerViewController.title = NSLocalizedString(@"Weather Results", nil);
+    NSString *formattedDate = [NSDateFormatter localizedStringFromDate:[NSDate yesterday]
+                                                             dateStyle:NSDateFormatterMediumStyle
+                                                             timeStyle:NSDateFormatterNoStyle];
+    containerViewController.navigationItem.prompt = [NSString stringWithFormat:NSLocalizedString(@"Brisbane - %@", nil), formattedDate];
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                  target:self
