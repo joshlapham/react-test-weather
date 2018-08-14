@@ -33,8 +33,6 @@ const NSString *kWIDBrisbane = @"1100661";
     
     [self fetchData:apiUrl
   completionHandler:^(NSDictionary *jsonData) {
-      NSLog(@"JSON data: %@", jsonData);
-      
       dispatch_async(dispatch_get_main_queue(), ^{
           self.fetchWeatherDataButton.enabled = YES;
           [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
