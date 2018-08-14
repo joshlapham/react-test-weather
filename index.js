@@ -16,6 +16,7 @@ class RNWeatherResultsList extends React.Component {
               State: { item.weather_state_name }{'\n'}
               Wind Speed: { item.wind_speed }{'\n'}
               Wind Direction: { item.wind_direction }{'\n'}
+              Wind Direction Compass: { item.wind_direction_compass }{'\n'}
               Air Pressure: { item.air_pressure }{'\n'}
               Humidity: { item.humidity }{'\n'}
               Visibility: { item.visibility }{'\n'}
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18,
-    height: 280,
+    height: 300,
   },
 });
 
