@@ -11,11 +11,17 @@ class RNWeatherResultsList extends React.Component {
           renderItem={({item}) =>
             <Text style={ styles.item }>
               Temperature: { item.the_temp }{'\n'}
-              Condition: { item.weather_state_name }{'\n'}
-              Time: { item.created }{'\n'}
               Min: { item.min_temp }{'\n'}
               Max: { item.max_temp }{'\n'}
-              Date: { item.applicable_date }
+              State: { item.weather_state_name }{'\n'}
+              Wind Speed: { item.wind_speed }{'\n'}
+              Wind Direction: { item.wind_direction }{'\n'}
+              Air Pressure: { item.air_pressure }{'\n'}
+              Humidity: { item.humidity }{'\n'}
+              Visibility: { item.visibility }{'\n'}
+              Predictability: { item.predictability }{'\n'}
+              Created: { item.created }{'\n'}
+              Applicable Date: { item.applicable_date }
             </Text>
           }
         />
@@ -31,7 +37,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18,
-    height: 150,
+    height: 280,
   },
 });
 
