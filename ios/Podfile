@@ -1,7 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.4'
 
-target 'Carton Cloud Tech Test' do
+target 'React Test Weather' do
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
     'Core',
     'CxxBridge', # Include this for RN >= 0.47
