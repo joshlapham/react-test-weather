@@ -10,12 +10,10 @@
 #import "AppDelegate.h"
 #import "NSDate+Helpers.h"
 #import "UIAlertController+Helpers.h"
+#import "NSError+Helpers.h"
 #import <React/RCTRootView.h>
 
-const NSString *kWIDBrisbane = @"1100661";
-
-// TODO: this should be external for all files
-const NSString *kErrorDomain = @"JPLError";
+NSString * const kWIDBrisbane = @"1100661";
 
 @interface ViewController ()
 
@@ -85,16 +83,7 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullab
                                                 completionHandler(nil, error);
                                                 
                                             } else if (httpResponse.statusCode != 200) {
-                                                NSDictionary *userInfo = @{
-                                                                           NSLocalizedDescriptionKey: NSLocalizedString(@"Operation was unsuccessful.", nil),
-                                                                           NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The operation timed out.", nil),
-                                                                           NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Have you tried turning it off and on again?", nil)
-                                                                           };
-                                                
-                                                NSError *error = [NSError errorWithDomain:kErrorDomain
-                                                                                     code:-57
-                                                                                 userInfo:userInfo];
-                                                
+                                                NSError *error = [NSError dataFetchError:httpResponse.statusCode];
                                                 completionHandler(nil, error);
                                                 
                                             } else {
