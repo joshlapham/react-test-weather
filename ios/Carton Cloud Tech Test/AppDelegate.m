@@ -14,4 +14,15 @@
 
 @implementation AppDelegate
 
+-           (BOOL)application:(UIApplication *)application
+didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
+    
+    self.bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation
+                                        moduleProvider:nil
+                                         launchOptions:launchOptions];
+    
+    return YES;
+}
+
 @end
