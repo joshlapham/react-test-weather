@@ -21,27 +21,25 @@ const NSString *kWIDBrisbane = @"1100661";
 @implementation ViewController
 
 - (IBAction)fetchWeatherDataButtonPressed:(id)sender {
-    // Testing
-    NSString *dateString = [self stringFromDate:[self yesterday]];
-    NSLog(@"Date string: %@", dateString);
-    
     self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    // TODO: allow for URL params
-    // TODO: need to fetch details for yesterday; so we'll need to form a string using `NSDate`
-    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/", kWIDBrisbane]];
+    NSString *dateString = [self stringFromDate:[self yesterday]];
+    
+    NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/", kWIDBrisbane, dateString]];
+    
+    NSLog(@"URL: %@", apiUrl);
     
     [self fetchData:apiUrl
   completionHandler:^(NSDictionary *jsonData) {
-        NSLog(@"JSON data: %@", jsonData);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.fetchWeatherDataButton.enabled = YES;
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [self presentReactView:jsonData];
-        });
-    }];
+      NSLog(@"JSON data: %@", jsonData);
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+          self.fetchWeatherDataButton.enabled = YES;
+          [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+          [self presentReactView:jsonData];
+      });
+  }];
 }
 
 - (NSDate *)yesterday {
@@ -60,7 +58,8 @@ const NSString *kWIDBrisbane = @"1100661";
     return [NSString stringWithFormat:@"%ld/%ld/%ld", (long)year, (long)month, (long)day];
 }
 
-- (void)fetchData:(NSURL *)apiUrl completionHandler:(void (^)(NSDictionary *))completionHandler {
+- (void)fetchData:(NSURL *)apiUrl
+completionHandler:(void (^)(NSDictionary *))completionHandler {
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
@@ -83,9 +82,11 @@ const NSString *kWIDBrisbane = @"1100661";
 - (void)presentReactView:(NSDictionary *)jsonData {
     NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
     
+    NSDictionary *jsonModified = @{ @"data": jsonData }; // Add a key to the JSON data so that React component can parse its `props` correctly
+    
     RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                         moduleName:@"RNWeatherResultsList"
-                                                 initialProperties:jsonData
+                                                 initialProperties:jsonModified
                                                      launchOptions:nil];
     
     UIViewController *vc = [[UIViewController alloc] init];
