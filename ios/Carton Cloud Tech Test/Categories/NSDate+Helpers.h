@@ -11,5 +11,6 @@
 @interface NSDate (Helpers)
 
 + (NSDate *)yesterday;
+- (NSString *)stringFromDate;
 
 @end

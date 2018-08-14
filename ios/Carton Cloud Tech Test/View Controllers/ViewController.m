@@ -25,7 +25,7 @@ const NSString *kWIDBrisbane = @"1100661";
     self.fetchWeatherDataButton.enabled = NO;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    NSString *dateString = [self stringFromDate:[NSDate yesterday]];
+    NSString *dateString = [[NSDate yesterday] stringFromDate];
     
     NSURL *apiUrl = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.metaweather.com/api/location/%@/%@/", kWIDBrisbane, dateString]];
     
@@ -39,17 +39,6 @@ const NSString *kWIDBrisbane = @"1100661";
           [self presentReactView:jsonData];
       });
   }];
-}
-
-- (NSString *)stringFromDate:(NSDate *)date {
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear
-                                                                   fromDate:date];
-    
-    NSInteger day = [components day];
-    NSInteger month = [components month];
-    NSInteger year = [components year];
-    
-    return [NSString stringWithFormat:@"%ld/%ld/%ld", (long)year, (long)month, (long)day];
 }
 
 - (void)fetchData:(NSURL *)apiUrl

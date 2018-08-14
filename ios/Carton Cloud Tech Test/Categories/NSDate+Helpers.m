@@ -17,4 +17,15 @@ const float kWholeDay = 86400.0;
     return [today dateByAddingTimeInterval:-kWholeDay];
 }
 
+- (NSString *)stringFromDate {
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear
+                                                                   fromDate:self];
+    
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
+    
+    return [NSString stringWithFormat:@"%ld/%ld/%ld", (long)year, (long)month, (long)day];
+}
+
 @end
