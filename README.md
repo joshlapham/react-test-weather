@@ -1,6 +1,12 @@
-# Carton Cloud Tech Test - iOS
+# React Test Weather
 
-By Josh Lapham [joshlapham@gmail.com]
+By Josh Lapham [josh@joshlapham.com]
+
+## What This Is
+
+A test app for learning React Native and implementing with an existing iOS app.
+
+Uses the [MetaWeather API](https://www.metaweather.com/api/) to fetch weather data for a given list of Australian capital cities.
 
 ## Environment
 
@@ -17,5 +23,5 @@ By Josh Lapham [joshlapham@gmail.com]
 1. Install React dependencies: `npm install`
 2. Start development server: `npm start`
 3. Install Xcode project dependencies: `cd ios && pod install`
-4. Open project workspace in Xcode (`ios/Carton Cloud Tech test.xcworkspace`)
+4. Open project workspace in Xcode (`ios/React Test Weather.xcworkspace`)
 5. Run project in Xcode
