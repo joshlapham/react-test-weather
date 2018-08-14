@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
 #import <React/RCTRootView.h>
 
 const float kWholeDay = 86400.0;
@@ -80,14 +81,13 @@ completionHandler:(void (^)(NSDictionary *))completionHandler {
 }
 
 - (void)presentReactView:(NSDictionary *)jsonData {
-    NSURL *jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios"];
-    
     NSDictionary *jsonModified = @{ @"data": jsonData }; // Add a key to the JSON data so that React component can parse its `props` correctly
     
-    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                        moduleName:@"RNWeatherResultsList"
-                                                 initialProperties:jsonModified
-                                                     launchOptions:nil];
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:delegate.bridge
+                                                     moduleName:@"RNWeatherResultsList"
+                                              initialProperties:jsonModified];
     
     UIViewController *vc = [[UIViewController alloc] init];
     vc.view = rootView;
