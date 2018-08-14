@@ -13,7 +13,7 @@
 #import "NSError+Helpers.h"
 #import <React/RCTRootView.h>
 
-NSString * const kWIDBrisbane = @"1100661";
+NSString * const kWIDBrisbane = @"1100661"; // Location ID for Brisbane
 
 @interface ViewController ()
 
@@ -37,14 +37,11 @@ NSString * const kWIDBrisbane = @"1100661";
                                           kWIDBrisbane,
                                           dateString]];
     
-    NSLog(@"URL: %@", apiUrl);
-    
     [self fetchData:apiUrl
   completionHandler:^(NSDictionary * _Nullable jsonData,
                       NSError * _Nullable error) {
-      NSLog(@"Error: %@", error);
-      
       if (error != nil && jsonData == nil) {
+          // Error
           dispatch_async(dispatch_get_main_queue(), ^{
               [self toggleUIState:NO];
               
@@ -57,6 +54,7 @@ NSString * const kWIDBrisbane = @"1100661";
           });
           
       } else {
+          // Success
           dispatch_async(dispatch_get_main_queue(), ^{
               [self toggleUIState:NO];
               [self presentReactView:jsonData];
@@ -66,7 +64,8 @@ NSString * const kWIDBrisbane = @"1100661";
 }
 
 - (void)fetchData:(NSURL *)apiUrl
-completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullable error))completionHandler {
+completionHandler:(void (^)(NSDictionary * _Nullable jsonData,
+                            NSError * _Nullable error))completionHandler {
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
     
@@ -75,8 +74,6 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullab
                                                             NSURLResponse * _Nullable response,
                                                             NSError * _Nullable error) {
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                                            NSLog(@"%@", response);
-                                            NSLog(@"Status code: %ld", (long)httpResponse.statusCode);
                                             
                                             // Handle errors
                                             if (error != nil) {
@@ -117,7 +114,7 @@ completionHandler:(void (^)(NSDictionary * _Nullable jsonData, NSError * _Nullab
     UIViewController *containerViewController = [[UIViewController alloc] init];
     containerViewController.view = rootView;
     containerViewController.title = NSLocalizedString(@"Weather Results", nil);
-    containerViewController.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React Native `FlatList` component view
+    containerViewController.edgesForExtendedLayout = UIRectEdgeNone; // Ensure navbar doesn't overlap React component view
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                  target:self
